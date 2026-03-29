@@ -1,0 +1,42 @@
+namespace: default
+
+storageClass:
+  name: ebs-gp3
+  type: gp3
+  fsType: ext4
+
+db:
+  image: ekchoi3912/mysql:5.7
+  replicas: 1
+  storage: 10Gi
+  secret:
+    rootPassword: "frodo5020!!"
+    password: "frodo5020!!"
+    database: "frodo"
+    user: "frodo"
+
+redis:
+  image: ekchoi3912/redis:v1
+  replicas: 1
+  storage: 1Gi
+
+app:
+  image: ekchoi3912/was1:v1
+  replicas: 3
+  secret:
+    mysqlUser: "frodo"
+    mysqlPassword: "frodo5020!!"
+    secretKey: "your_secret_key"
+  config:
+    mysqlHost: "db-svc"
+    mysqlDb: "frodo"
+    sessionRedisHost: "redis-svc"
+    sessionRedisPort: "6379"
+
+nginx:
+  image: nginx
+  replicas: 3
+
+ingress:
+  host: www.dudwns7673.p-e.kr
+  certificateArn: arn:aws:acm:ap-northeast-2:529831688781:certificate/983f0991-d8a1-4960-9ef3-b9e5d68aabe5
