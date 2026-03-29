@@ -21,7 +21,7 @@ redis:
   storage: 1Gi
 
 app:
-  image: dudwns7673/app:v2
+  image: dudwns7673/app:v5
   replicas: 3
   secret:
     mysqlUser: "frodo"
